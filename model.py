@@ -5,8 +5,10 @@ import keras
 
 def get_model():
     model = keras.Sequential([
-        keras.layers.Flatten(input_shape=(28, 28, 1), name="input"),  # gotta ad the extra 1 at the end bc it's a 3d tensor
-        keras.layers.Dense(128, activation='relu', name='hidden'),
+        keras.layers.Conv2D(128, activation='relu', name='hidden', kernel_size=3, strides=1, padding='same', input_shape=(28, 28, 1)),
+        # relu bc "everything unimportant is equally unimportant"
+        keras.layers.MaxPool2D(pool_size=(2, 2)),
+        keras.layers.Flatten(name='flatten'),
         keras.layers.Dense(10, name='output', activation='softmax')  # needs 10 neurons bc this is a classification problem (classifying digits 0-9)
         # softmax on the output because need to convert the output to probabilities (which digit is most likely)
     ])
